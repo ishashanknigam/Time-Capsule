@@ -1,0 +1,5 @@
+.gitignore
+node_modules/
+.env
+PROJECT_GUIDE.md
+README.md

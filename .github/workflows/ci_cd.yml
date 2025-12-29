@@ -63,11 +63,30 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Pull latest images
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-backend:latest
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-frontend:latest
 
+            # Stop and remove old containers
             docker stop time-capsule-backend time-capsule-frontend || true
             docker rm time-capsule-backend time-capsule-frontend || true
-            
-            docker run -d --name time-capsule-backend -p 4000:4000 ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-backend:latest
-            docker run -d --name time-capsule-frontend -p 80:5173 ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-frontend:latest
+
+            # Run backend with environment variables from GitHub Secrets
+            docker run -d \
+              --name time-capsule-backend \
+              -p 4000:4000 \
+              -e PORT=4000 \
+              -e NODE_ENV=production \
+              -e MONGODB_URI=${{ secrets.MONGODB_URI }} \
+              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              -e EMAIL_USER=${{ secrets.EMAIL_USER }} \
+              -e EMAIL_PASS=${{ secrets.EMAIL_PASS }} \
+              --restart unless-stopped \
+              ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-backend:latest
+
+            # Run frontend
+            docker run -d \
+              --name time-capsule-frontend \
+              -p 80:5173 \
+              --restart unless-stopped \
+              ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-frontend:latest

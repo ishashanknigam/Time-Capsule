@@ -87,7 +87,6 @@ jobs:
               -e SMTP_USER=${{ secrets.SMTP_USER }} \
               -e SMTP_PASS=${{ secrets.SMTP_PASS }} \
               -e SMTP_FROM=${{ secrets.SMTP_FROM }} \
-              
               --restart unless-stopped \
               ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-backend:latest
 

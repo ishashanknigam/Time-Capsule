@@ -80,9 +80,14 @@ jobs:
               -e PORT=4000 \
               -e NODE_ENV=production \
               -e MONGODB_URI=${{ secrets.MONGODB_URI }} \
-              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              -e CLIENT_ORIGIN=${{ secrets.CLIENT_ORIGIN }} \
               -e EMAIL_USER=${{ secrets.EMAIL_USER }} \
-              -e EMAIL_PASS=${{ secrets.EMAIL_PASS }} \
+              -e SMTP_HOST=${{ secrets.SMTP_HOST }} \
+              -e SMTP_PORT=${{ secrets.SMTP_PORT }} \
+              -e SMTP_USER=${{ secrets.SMTP_USER }} \
+              -e SMTP_PASS=${{ secrets.SMTP_PASS }} \
+              -e SMTP_FROM=${{ secrets.SMTP_FROM }} \
+              
               --restart unless-stopped \
               ${{ secrets.DOCKERHUB_USERNAME }}/time-capsule-backend:latest
 

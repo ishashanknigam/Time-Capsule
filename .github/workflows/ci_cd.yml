@@ -81,6 +81,7 @@ jobs:
               -e NODE_ENV=production \
               -e MONGODB_URI=${{ secrets.MONGODB_URI }} \
               -e CLIENT_ORIGIN=${{ secrets.CLIENT_ORIGIN }} \
+              -e MAIL_DRIVER=smtp \
               -e EMAIL_USER=${{ secrets.EMAIL_USER }} \
               -e SMTP_HOST=${{ secrets.SMTP_HOST }} \
               -e SMTP_PORT=${{ secrets.SMTP_PORT }} \

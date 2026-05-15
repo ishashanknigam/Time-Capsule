@@ -29,9 +29,10 @@ async function start() {
   await mongoose.connect(mongoUri);
   console.log("Connected to MongoDB");
 
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  //removing for vercel deploy
+  // app.listen(PORT, () => {
+  //   console.log(`Server running on http://localhost:${PORT}`);
+  // });
 
   startScheduler();
 }
@@ -39,3 +40,5 @@ async function start() {
 start().catch((err) => {
   console.error("Failed to start server", err);
 });
+
+export default app; // for vercel deploy

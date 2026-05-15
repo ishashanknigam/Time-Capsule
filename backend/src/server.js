@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import capsuleRouter from "./routes/capsules.js";
+import authRouter from "./routes/auth.js";
+import { requireAuth } from "./middleware/auth.js";
 import { startScheduler } from "./services/scheduler.js";
 
 dotenv.config();
@@ -18,7 +20,8 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.use("/api/capsules", capsuleRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/capsules", requireAuth, capsuleRouter);
 
 async function start() {
   const mongoUri =
